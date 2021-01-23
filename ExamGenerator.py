@@ -41,7 +41,8 @@ class Test:
             self.testCustomizer(buffer[0], buffer[1], buffer[2])
             self.__testQuestionListGenerator()
         else:
-            self.__testQuestionCountGenerator(testScore)
+            self.__needCustomizer = False
+            self.__testQuestionCountGenerator(self.__testScore)
             self.__testQuestionListGenerator()
 
     @property
@@ -108,10 +109,10 @@ class Test:
             raise GeneratorError("score < 10", "试卷总分太少。给谁考试呢这是？")
         elif score < 20:
             self.__TrueFalseCount = score % 5
-            self.__FillBlankCount = self.__SingleChoiceCount = score / 5
+            self.__FillBlankCount = self.__SingleChoiceCount = int(score / 5)
         elif score <= 100:
             self.__TrueFalseCount = score % 10 + 10
-            self.__FillBlankCount = self.__SingleChoiceCount = (score - self.__TrueFalseCount / 5)
+            self.__FillBlankCount = self.__SingleChoiceCount = int((score - self.__TrueFalseCount) / 5)
         elif score > 100 or score < 0:
             raise GeneratorError("score > 100 or score < 0", "😅")
 
