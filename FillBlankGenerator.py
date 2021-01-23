@@ -6,3 +6,5 @@ for i in range(20):
         fo.write(line)
 
     fo.close()
+
+# 填空题生成，共两行，第一行为题目，第二行为答案

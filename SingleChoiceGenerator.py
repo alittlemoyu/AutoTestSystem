@@ -3,7 +3,7 @@ import random
 for k in range(20):
     liebiao = [0, 0, 0, 0]
     count = 1
-    for i in range(0, 4):
+    for i in range(0, 4):  # 该四位数去重乱序算法实现使用了一个较为笨重的实现方式，但符合直觉。较好的实现方式已经在ExamGenerator中加载。
         while True:
             liebiao[i] = random.randint(1, 4)
             print("Generating")
@@ -26,6 +26,8 @@ for k in range(20):
                     print("Pass!")
                     break
     choiceDataRaw = [k - random.randint(0, k), k + random.randint(0, k - 1 if k - 1 >= 0 else k), 2 * k, int(1.5 * k)]
+    # 选项生成
+
     choiceData = [0, 0, 0, 0]
     for a in range(0, 4):
         choiceData[a] = choiceDataRaw[liebiao[a] - 1]

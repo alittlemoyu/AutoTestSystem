@@ -1,16 +1,17 @@
 import random
 
+# 自行输入题库的题目数量
 SingleChoiceLibCount = 20
 FillBlankLibCount = 20
 TrueFalseLibCount = 20
 
 
-def QuestionListGenerator(list_input_raw):
-    list_input, count, libCount = list_input_raw
+def QuestionListGenerator(list_input_raw):  # 根据试卷不同类型的题目数量自动提取题目，保证不重复
+    list_input, count, libCount = list_input_raw  # 解包数据
     for i in range(0, count):
         while len(list_input) < count:
             list_input.append(random.randint(1, libCount))
-            if list_input.index(list_input[-1]) != len(list_input) - 1:
+            if list_input.index(list_input[-1]) != len(list_input) - 1:  # 确保每次向list中添加的题号都是首次出现，否则pop弹出
                 list_input.pop()
 
 
@@ -18,7 +19,7 @@ class Error(Exception):
     pass
 
 
-class GeneratorError(Error):
+class GeneratorError(Error):  # 定义错误类
     def __init__(self, expression, message):
         self.expression = expression
         self.message = message
@@ -27,24 +28,25 @@ class GeneratorError(Error):
         return repr(self.message)
 
 
-class Test:
+class Test:  # 定义试卷大类
     def __init__(self, useCustomizer=False, testScore=100, testName='Test'):
-        self.testName = testName
+        self.testName = testName  # 除试卷名可随时更改外，其余属性均设为私有
         self.__testScore = testScore
-        self.__SingleChoiceList = []
+        self.__SingleChoiceList = []  # 题号表
         self.__FillBlankList = []
         self.__TrueFalseList = []
-        if useCustomizer:
+        if useCustomizer:  # 定义一个参数，用于告知程序是否需要自定义试卷题目
             self.__testScore = None
             self.__needCustomizer = True
-            buffer = eval(input("TestCustomizer start. Input 3 num:"))
+            buffer = eval(input("TestCustomizer start. Input 3 num:"))  # 从键盘获取三种题的数量
             self.testCustomizer(buffer[0], buffer[1], buffer[2])
             self.__testQuestionListGenerator()
         else:
             self.__needCustomizer = False
-            self.__testQuestionCountGenerator(self.__testScore)
+            self.__testQuestionCountGenerator(self.__testScore)  # 自动生成试卷时，需要根据总分生成题目数量
             self.__testQuestionListGenerator()
 
+# 提供只读的属性
     @property
     def FillBlankCount(self):
         if self.__needCustomizer:
@@ -101,10 +103,10 @@ class Test:
             self.__FillBlankCount = FillBlank
             self.__SingleChoiceCount = SingleChoice
             self.__TrueFalseCount = TrueFalse
-            self.__TestScore = self.__SingleChoiceCount * 3 + self.__FillBlankCount * 2 + self.__TrueFalseCount
+            self.__TestScore = self.__SingleChoiceCount * 3 + self.__FillBlankCount * 2 + self.__TrueFalseCount  # 计算总分
             self.__needCustomizer = False
 
-    def __testQuestionCountGenerator(self, score):
+    def __testQuestionCountGenerator(self, score):  # 题目数量计算，接受从10到100的总分
         if score < 10:
             raise GeneratorError("score < 10", "试卷总分太少。给谁考试呢这是？")
         elif score < 20:
@@ -120,5 +122,7 @@ class Test:
         question_list = [[self.__SingleChoiceList, self.__SingleChoiceCount, SingleChoiceLibCount],
                          [self.__FillBlankList, self.__FillBlankCount, FillBlankLibCount],
                          [self.__TrueFalseList, self.__TrueFalseCount, TrueFalseLibCount]]
+        # 打包数据提供给QuestionListGenerator使用
+
         for i in question_list:
             QuestionListGenerator(i)
