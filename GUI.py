@@ -29,19 +29,19 @@ def GuiStart(test, questionTotalCount):
         questionTotalCount += 1
         if questionTotalCount <= test.SingleChoiceCount:
             QuestionContent = open(
-                'C:\\Users\\holyCRAP\\OneDrive\\Python\\Database\\Single_choice' + str(question) + '.txt', 'r')
+                'C:\\Users\\holyCRAP\\OneDrive\\Python\\AutoTestSystem\\Database\\Single_choice' + str(question) + '.txt', 'r')
             QuestionContentLine = QuestionContent.readline()
             QuestionContentChoice = QuestionContent.readlines()[1:4]
             QuestionContentLine_n_Choice = QuestionContentChoice.insert(0, QuestionContentLine)
             inputAnswerList.append(GUI(test.testName, questionTotalCount, "SingleChoice", QuestionContentLine_n_Choice))
         elif questionTotalCount <= test.FillBlankCount + test.SingleChoiceCount:
             QuestionContent = open(
-                'C:\\Users\\holyCRAP\\OneDrive\\Python\\Database\\Fill_in_the_blank' + str(question) + '.txt', 'r')
+                'C:\\Users\\holyCRAP\\OneDrive\\Python\\AutoTestSystem\\Database\\Fill_in_the_blank' + str(question) + '.txt', 'r')
             QuestionContentLine = QuestionContent.readline()
             inputAnswerList.append(GUI(test.testName, questionTotalCount, "FillBlank", QuestionContentLine))
         else:
             QuestionContent = open(
-                'C:\\Users\\holyCRAP\\OneDrive\\Python\\Database\\True_or_False' + str(question) + '.txt', 'r')
+                'C:\\Users\\holyCRAP\\OneDrive\\Python\\AutoTestSystem\\Database\\True_or_False' + str(question) + '.txt', 'r')
             QuestionContentLine = QuestionContent.readline()
             inputAnswerList.append(GUI(test.testName, questionTotalCount, "TrueFalse", QuestionContentLine))
     return inputAnswerList

@@ -32,7 +32,7 @@ for k in range(20):
     data = [(str(k) + '+' + str(k) + '是多少呢？'), '\n', 'A.', str(choiceData[0]), '\n', 'B.', str(choiceData[1]),
             '\n' 'C.',
             str(choiceData[2]), '\n' 'D.', str(choiceData[3]), '\n']
-    directory = 'C:\\Users\\holyCRAP\\OneDrive\\Python\\Database\\Single_choice\\' + str(k) + '.txt'
+    directory = 'C:\\Users\\holyCRAP\\OneDrive\\Python\\AutoTestSystem\\Database\\Single_choice\\' + str(k) + '.txt'
     fo = open(directory, 'w', encoding='utf-8')
     for line in data:
         fo.write(line)
