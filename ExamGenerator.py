@@ -117,6 +117,7 @@ class Test:  # 定义试卷大类
             self.__FillBlankCount = self.__SingleChoiceCount = int((score - self.__TrueFalseCount) / 5)
         elif score > 100 or score < 0:
             raise GeneratorError("score > 100 or score < 0", "😅")
+        self.questionTotalCount = self.__SingleChoiceCount+self.__FillBlankCount+self.__TrueFalseCount
 
     def __testQuestionListGenerator(self):
         question_list = [[self.__SingleChoiceList, self.__SingleChoiceCount, SingleChoiceLibCount],
@@ -126,3 +127,24 @@ class Test:  # 定义试卷大类
 
         for i in question_list:
             QuestionListGenerator(i)
+
+    def examContentGenerator(self):
+        questionNoList = [[self.SingleChoiceList, 'Single_choice'], [self.FillBlankList, 'Fill_in_the_blank'],
+                          [self.TrueFalseList, 'True_or_False']]  # 打包一个题目表传入答案生成函数
+        questionContent = []
+        no=0
+        for questionKind in questionNoList:  # questionNolist的结构为List[List[Union[list, str]]]
+            for questionNo in questionKind[0]:
+                QuestionContent = open(
+                    'Database\\' + questionKind[1] + '\\' + str(
+                        questionNo) + '.txt',  # questionKind[1]为一个字符串，包含有文件夹的名字
+                    'r')
+                questionContent[no].append(questionKind[1])
+                questionContent[no].append(QuestionContent.readlines()[0])
+                questionContent[no].append(QuestionContent.readlines()[1])
+                questionContent[no].append(QuestionContent.readlines()[2])
+                questionContent[no].append(QuestionContent.readlines()[3])
+                questionContent[no].append(QuestionContent.readlines()[4])
+                no+=1
+
+        return questionContent
